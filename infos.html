@@ -50,7 +50,7 @@ a{color:#7E5F2E}a:hover{color:#161412}
 <a href="#location" style="color: #161412; text-decoration: none; padding: 8px 0">Conditions de location</a>
 <a href="#cadeaux" style="color: #161412; text-decoration: none; padding: 8px 0">Cartes cadeaux</a>
 <a href="#confidentialite" style="color: #161412; text-decoration: none; padding: 8px 0">Confidentialité</a>
-<p style="margin: 18px 0 0; color: #5E574E; font-size: 13px">Dernière mise à jour : 21 novembre 2026</p>
+<p style="margin: 18px 0 0; color: #5E574E; font-size: 13px">Dernière mise à jour : 26 novembre 2026</p>
 </nav>
 
 <main style="flex: 999 1 560px; min-width: 0">
@@ -63,7 +63,7 @@ a{color:#7E5F2E}a:hover{color:#161412}
 <div style="margin-bottom: 18px"><h3 style="margin: 0 0 4px; font-size: 16px; font-weight: 600">Du bien-être, pas un soin médical</h3><p style="margin: 0; color: #3E3832">Monsieur Cupping propose des prestations de bien-être et de détente. Je ne pose aucun diagnostic, je ne prescris rien et je ne promets aucune guérison. Une séance ne remplace jamais l’avis ni le suivi d’un médecin ou d’un kinésithérapeute.</p></div>
 <div style="margin-bottom: 18px"><h3 style="margin: 0 0 4px; font-size: 16px; font-weight: 600">Ventouses sèches uniquement</h3><p style="margin: 0; color: #3E3832">Aucune incision, aucune piqûre, aucune saignée. La hijama dite « humide », qui consiste à inciser la peau, est en France un acte réservé aux médecins : je ne la pratique pas et je ne l’orienterai jamais vers quelqu’un qui n’est pas médecin.</p></div>
 <div style="margin-bottom: 18px"><h3 style="margin: 0 0 4px; font-size: 16px; font-weight: 600">Votre santé d’abord</h3><p style="margin: 0; color: #3E3832">Avant la séance, je vous pose quelques questions. En cas de problème de santé, de traitement anticoagulant, de trouble de la coagulation, de problème cardiaque, de fièvre, de plaie ou de maladie de peau sur la zone, demandez l’avis de votre médecin. En cas de doute, la séance est reportée ou adaptée.</p></div>
-<div style="margin-bottom: 18px"><h3 style="margin: 0 0 4px; font-size: 16px; font-weight: 600">Hygiène</h3><p style="margin: 0; color: #3E3832">Gants à usage unique, serviettes propres pour chaque client, ventouses nettoyées et désinfectées après chaque séance.</p></div>
+<div style="margin-bottom: 18px"><h3 style="margin: 0 0 4px; font-size: 16px; font-weight: 600">Hygiène</h3><p style="margin: 0; color: #3E3832">Gants à usage unique, deux grandes serviettes propres préparées par le client, ventouses nettoyées et désinfectées après chaque séance.</p></div>
 <div style="margin-bottom: 18px"><h3 style="margin: 0 0 4px; font-size: 16px; font-weight: 600">Pudeur et respect</h3><p style="margin: 0; color: #3E3832">Les séances sont réservées aux hommes. Du nombril aux genoux, le corps reste toujours couvert ; cuisses et ischios se travaillent par-dessus la serviette. La location de matériel et les cartes cadeaux sont ouvertes à tous et à toutes.</p></div>
 <div style="margin-bottom: 18px"><h3 style="margin: 0 0 4px; font-size: 16px; font-weight: 600">Vos données</h3><p style="margin: 0; color: #3E3832">Vos informations servent uniquement à organiser votre rendez-vous. Elles ne sont ni vendues ni partagées. Voir la rubrique Confidentialité.</p></div>
 </section>
@@ -143,7 +143,7 @@ class Component extends DCLogic {
         { t: 'Paiement', d: 'En espèces, par PayPal ou par Lydia, à la fin de la séance.' },
         { t: 'Annulation et retard', d: 'Toute annulation doit être signalée au moins 24 h à l’avance ; la séance est alors reportée sans frais. En cas d’annulations tardives répétées, un acompte pourra être demandé. Au-delà de 15 minutes de retard, la séance pourra être écourtée.' },
         { t: 'Précautions', d: 'Le client signale avant la séance toute particularité de santé (problème de peau ou de circulation, traitement anticoagulant, opération récente, etc.). En cas de doute, il demande l’avis de son médecin. Le praticien peut refuser ou adapter une séance.' },
-        { t: 'Tenue et hygiène', d: 'Le client garde un short ou un bas couvrant jusqu’aux genoux. Les serviettes sont fournies et le matériel est désinfecté après chaque séance.' }
+        { t: 'Tenue et hygiène', d: 'Le client garde un short ou un bas couvrant jusqu’aux genoux. Le client prépare deux grandes serviettes. Le matériel est désinfecté après chaque séance.' }
       ],
       tarifs: [
         { n: 'Pack Détente (masque chauffant, masseur de nuque, pistolet Renpho)', s: '39 €', w: '39 €', c: '100 €' },
@@ -153,16 +153,16 @@ class Component extends DCLogic {
       loc: [
         { t: 'Durées', d: 'Le matériel se loue uniquement en pack. Semaine : remise le lundi, retour le jeudi. Week-end : remise le vendredi, retour le lundi. La location est ouverte à tous et à toutes.' },
         { t: 'Remise et retour', d: 'Le matériel est remis en main propre, désinfecté et chargé, avec une démonstration. Il peut être récupéré à Noyelles-Godault, livré lors d’une séance sans frais, ou livré avec les frais de déplacement habituels.' },
-        { t: 'Caution', d: 'La caution est prise par empreinte bancaire (rien n’est débité) ou par un autre moyen convenu. Des photos du matériel sont prises à la remise et au retour. La caution n’est retenue qu’en cas de casse constatée, jamais pour l’usure normale, et uniquement à hauteur du dommage réel.' },
+        { t: 'Caution', d: 'La caution est prise par empreinte bancaire (rien n’est débité) ou par un autre moyen convenu. Des photos du matériel sont prises à la remise et au retour. La caution n’est retenue qu’en cas de casse, de perte ou de vol dus à une faute ou à une négligence du locataire, jamais pour l’usure normale, et uniquement à hauteur du dommage réel.' },
         { t: 'État des lieux', d: 'Un rapide état des lieux est fait à la remise et au retour, photos à l’appui.' },
         { t: 'Retard de retour', d: 'Chaque jour de retard non prévenu est facturé selon le montant convenu à la remise du matériel.' },
-        { t: 'Casse, perte ou vol', d: 'Le locataire est responsable du matériel pendant la location. En cas de dégradation liée à une mauvaise utilisation, de perte ou de vol, les frais de réparation ou de remplacement sont retenus sur la caution, et au-delà si nécessaire. L’usure normale n’est pas facturée.' },
+        { t: 'Casse, perte ou vol', d: 'Le locataire prend soin du matériel pendant la location. En cas de casse, de perte ou de vol dus à une faute ou à une négligence de sa part, les frais de réparation ou de remplacement sont retenus sur la caution, et au-delà si nécessaire, à hauteur du dommage réel. L’usure normale n’est pas facturée.' },
         { t: 'Utilisation', d: 'Usage strictement personnel, conforme à la notice du fabricant. Le matériel ne doit pas être prêté ni sous-loué.' },
         { t: 'Contre-indications', d: 'Les appareils de compression, de chaleur et de froid ne conviennent pas à tout le monde. Ne les utilisez pas, sauf avis médical favorable, en cas notamment de troubles circulatoires (phlébite, thrombose), de problème cardiaque, de grossesse, de plaie ou d’infection de la peau. Cette liste n’est pas exhaustive : la notice du fabricant fait foi.' },
         { t: 'Paiement', d: 'Le prix de la location est réglé à la remise du matériel, en espèces, par PayPal ou par Lydia.' }
       ],
       cadeaux: [
-        { t: 'Validité', d: 'Une carte cadeau est valable 6 mois à compter de son achat, pour la formule indiquée. Elle n’est ni remboursable ni échangeable contre de l’argent.' },
+        { t: 'Validité', d: 'Une carte cadeau est valable 6 mois à compter de son achat, pour la formule indiquée. Elle n’est ni remboursable ni échangeable contre de l’argent. Passé ce délai, un avoir du montant payé est accordé sur demande.' },
         { t: 'Utilisation', d: 'Le bénéficiaire réserve sa séance comme toute autre séance, en indiquant le code de la carte.' }
       ],
       rgpd: [
