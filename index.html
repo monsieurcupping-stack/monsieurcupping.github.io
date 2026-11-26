@@ -3,6 +3,27 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<style>html.mc-voile{background:#0A0908}html.mc-voile::before{content:"";position:fixed;inset:0;z-index:199;background:#0A0908}</style>
+<script>
+/* avant le premier affichage : si une intro va se jouer, écran noir tout de suite (le site n'apparaît pas avant elle) */
+(function () {
+  const K_SESSION = 'mc_intro_session', K_DATE = 'mc_intro_date', K_PASSAGE = 'mc_dernier_passage';
+  const DELAI = 30 * 24 * 3600 * 1000; /* intro complète : au plus une fois tous les 30 jours */
+  const PAUSE = 30 * 60 * 1000; /* on vient de partir (moins de 30 min) : rien */
+  const age = (k) => { try { const t = Number(localStorage.getItem(k)); return t > 0 ? Date.now() - t : Infinity; } catch (_) { return Infinity; } };
+  /* 'complete', 'fin' (logo et nom seuls) ou null */
+  const choisir = () => {
+    try { if (sessionStorage.getItem(K_SESSION) === '1') return null; } catch (_) {}
+    if (age(K_DATE) >= DELAI) return 'complete';
+    return age(K_PASSAGE) < PAUSE ? null : 'fin';
+  };
+  const noIntro = /[?&]nointro\b/.test(location.search) || matchMedia('(prefers-reduced-motion: reduce)').matches;
+  window.mcModeIntro = noIntro ? null : choisir();
+  const h = document.documentElement;
+  if (window.mcModeIntro) { h.classList.add('mc-voile'); setTimeout(() => h.classList.remove('mc-voile'), 15000); }
+  else if (!noIntro) { try { localStorage.setItem(K_PASSAGE, String(Date.now())); } catch (_) {} }
+})();
+</script>
 <title>Monsieur Cupping · Massage et cupping à domicile, Noyelles-Godault</title>
 <meta name="description" content="Massage, hijama sèche (cupping) et récupération à domicile pour hommes, jusqu’à 25 km autour de Noyelles-Godault. Location de matériel. 5/5 sur Google.">
 <link rel="canonical" href="https://monsieurcupping.fr/">
@@ -864,36 +885,45 @@ html.mc-lock,html.mc-lock body{overflow:hidden}
 </style>
 <script>
 (function () {
-  const K_SESSION = 'mc_intro_session', K_VU = 'mc_rituel_vu';
-  const ss = (k, v) => { try { if (v === undefined) return sessionStorage.getItem(k); sessionStorage.setItem(k, v); } catch (_) { return null; } };
-  let fr = null, timer = 0;
+  const K_SESSION = 'mc_intro_session', K_DATE = 'mc_intro_date', K_PASSAGE = 'mc_dernier_passage', K_VU = 'mc_rituel_vu';
+  const noter = (mode) => {
+    try { sessionStorage.setItem(K_SESSION, '1'); } catch (_) {}
+    try { localStorage.setItem(K_PASSAGE, String(Date.now())); if (mode === 'complete') localStorage.setItem(K_DATE, String(Date.now())); } catch (_) {}
+  };
+  let fr = null, timer = 0, secours = 0;
+  const devoiler = () => document.documentElement.classList.remove('mc-voile');
   const logo = () => document.querySelector('img[src="38f8adb27a9b71e04cc78359b9c3fc99.png"]');
   function close(fast) {
-    if (!fr) return; const f = fr; fr = null; clearTimeout(timer);
-    ss(K_SESSION, '1'); document.documentElement.classList.remove('mc-lock');
+    devoiler(); if (!fr) return; const f = fr; fr = null; clearTimeout(timer); clearTimeout(secours);
+    document.documentElement.classList.remove('mc-lock');
     f.classList.add('out'); if (fast) f.style.transitionDuration = '.45s';
     setTimeout(() => f.remove(), fast ? 600 : 2800);
   }
-  function open(full) {
+  function open(mode) {
     if (fr) return;
-    if (full) { try { localStorage.removeItem(K_VU); } catch (_) {} }
+    noter(mode); /* notée dès l'ouverture : elle ne revient pas si on quitte en cours de route */
+    try { localStorage.removeItem(K_VU); } catch (_) {}
     document.documentElement.classList.add('mc-lock'); window.scrollTo(0, 0);
     fr = document.createElement('iframe'); fr.id = 'mc-intro'; fr.title = 'Introduction Monsieur Cupping';
-    fr.setAttribute('allow', 'autoplay'); fr.src = 'intro.html';
+    fr.setAttribute('allow', 'autoplay'); fr.src = mode === 'fin' ? 'intro.html?fin' : 'intro.html';
+    fr.style.background = '#0A0908';
     document.body.appendChild(fr);
     timer = setTimeout(() => close(true), 90000); /* sécurité : jamais bloqué sur l'intro */
+    secours = setTimeout(() => close(true), 15000); /* intro qui ne charge pas : on montre le site */
   }
   window.addEventListener('message', (e) => {
     if (!fr || e.source !== fr.contentWindow) return; const t = (e.data || {}).mc;
+    if (t === 'ready') clearTimeout(secours);
     if (t === 'ready' || t === 'open') { const im = logo(); if (im) { const r = im.getBoundingClientRect(); fr.contentWindow.postMessage({ mc: 'nm', r: { top: r.top, left: r.left, width: r.width, height: r.height } }, '*'); } }
-    if (t === 'open') { fr.style.pointerEvents = 'none'; }
+    if (t === 'open') { devoiler(); fr.style.pointerEvents = 'none'; fr.style.background = 'transparent'; }
     if (t === 'done') close(false);
     if (t === 'skip') close(true);
   });
-  document.addEventListener('click', (e) => { const b = e.target.closest && e.target.closest('[data-replay-intro]'); if (b) { e.preventDefault(); open(true); } });
-  /* 1re visite : intro complète ; visites suivantes : version courte ; une seule fois par visite */
-  const noIntro = /[?&]nointro\b/.test(location.search) || matchMedia('(prefers-reduced-motion: reduce)').matches;
-  if (!noIntro && ss(K_SESSION) !== '1') open(false);
+  document.addEventListener('click', (e) => { const b = e.target.closest && e.target.closest('[data-replay-intro]'); if (b) { e.preventDefault(); open('complete'); } });
+  /* retour arrière du téléphone : on ne reprend pas une intro interrompue */
+  window.addEventListener('pageshow', (e) => { if (e.persisted) close(true); });
+  /* 1re fois : intro complète ; nouvelles visites : le final seul ; navigation dans le site : rien */
+  if (window.mcModeIntro) open(window.mcModeIntro);
 })();
 </script>
 
