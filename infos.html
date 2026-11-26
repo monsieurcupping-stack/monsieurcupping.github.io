@@ -20,6 +20,12 @@ body{margin:0;background:#FAF7F2}
 a{color:#7E5F2E}a:hover{color:#161412}
 .mc-btn{transition:background .25s}
 .mc-ghost:hover{background:rgba(22,20,18,.06) !important}
+
+/* v11 */
+@media (max-width: 899px){.mc-fabs{display:none!important}}
+@media (max-width: 600px){.mc-foot-nav{display:none!important}}
+.mc-clamp{display:-webkit-box;-webkit-line-clamp:5;-webkit-box-orient:vertical;overflow:hidden}
+@media (max-width: 600px){.mc-dl{grid-template-columns:1fr!important;gap:2px!important}.mc-dl dd{margin-bottom:12px!important;overflow-wrap:anywhere}}
 </style>
 <script src="dc.js"></script>
 </head>
@@ -42,7 +48,7 @@ a{color:#7E5F2E}a:hover{color:#161412}
 <a href="#mentions" style="color: #161412; text-decoration: none; padding: 8px 0">Mentions légales</a>
 <a href="#cgv" style="color: #161412; text-decoration: none; padding: 8px 0">Conditions des séances</a>
 <a href="#location" style="color: #161412; text-decoration: none; padding: 8px 0">Conditions de location</a>
-<a href="#cadeaux" style="color: #161412; text-decoration: none; padding: 8px 0">Cartes cadeaux et fidélité</a>
+<a href="#cadeaux" style="color: #161412; text-decoration: none; padding: 8px 0">Cartes cadeaux</a>
 <a href="#confidentialite" style="color: #161412; text-decoration: none; padding: 8px 0">Confidentialité</a>
 <p style="margin: 18px 0 0; color: #5E574E; font-size: 13px">Dernière mise à jour : 21 novembre 2026</p>
 </nav>
@@ -64,7 +70,7 @@ a{color:#7E5F2E}a:hover{color:#161412}
 
 <section id="mentions" style="border-top: 1px solid #E3D9CA; padding-top: 30px; margin-bottom: 50px">
 <h2 style="margin: 0 0 18px; font-family: 'Cormorant Garamond', Georgia, serif; font-weight: 400; font-size: 38px; line-height: 1.1">Mentions légales</h2>
-<dl style="margin: 0; display: grid; grid-template-columns: minmax(160px, 220px) 1fr; gap: 10px 24px">
+<dl class="mc-dl" style="margin: 0; display: grid; grid-template-columns: minmax(160px, 220px) 1fr; gap: 10px 24px">
 <dt style="font-weight: 600">Éditeur</dt><dd style="margin: 0">Monsieur Cupping — Yossri Rahym Medjahdi, entrepreneur individuel</dd>
 <dt style="font-weight: 600">SIRET</dt><dd style="margin: 0">979 412 905 00015</dd>
 <dt style="font-weight: 600">Adresse</dt><dd style="margin: 0">Bd Louise Weiss, 62950 Noyelles-Godault</dd>
@@ -102,7 +108,7 @@ a{color:#7E5F2E}a:hover{color:#161412}
 </section>
 
 <section id="cadeaux" style="border-top: 1px solid #E3D9CA; padding-top: 30px; margin-bottom: 50px">
-<h2 style="margin: 0 0 18px; font-family: 'Cormorant Garamond', Georgia, serif; font-weight: 400; font-size: 38px; line-height: 1.1">Cartes cadeaux et fidélité</h2>
+<h2 style="margin: 0 0 18px; font-family: 'Cormorant Garamond', Georgia, serif; font-weight: 400; font-size: 38px; line-height: 1.1">Cartes cadeaux</h2>
 <template data-for="cadeaux" data-as="c">
 <div style="margin-bottom: 18px"><h3 style="margin: 0 0 4px; font-size: 16px; font-weight: 600">{{ c.t }}</h3><p style="margin: 0; color: #3E3832">{{ c.d }}</p></div>
 </template>
@@ -157,13 +163,11 @@ class Component extends DCLogic {
       ],
       cadeaux: [
         { t: 'Validité', d: 'Une carte cadeau est valable 6 mois à compter de son achat, pour la formule indiquée. Elle n’est ni remboursable ni échangeable contre de l’argent.' },
-        { t: 'Utilisation', d: 'Le bénéficiaire réserve sa séance comme toute autre séance, en indiquant le code de la carte.' },
-        { t: 'Le Club', d: 'Une séance payée donne droit à un tampon ; après 5 tampons, la 6ᵉ séance (formule Basic ou Full) est offerte.' },
-        { t: 'Parrainage', d: 'Le filleul bénéficie de 5 € de réduction sur sa première séance ; le parrain reçoit 5 € de réduction sur sa séance suivante.' }
+        { t: 'Utilisation', d: 'Le bénéficiaire réserve sa séance comme toute autre séance, en indiquant le code de la carte.' }
       ],
       rgpd: [
         { t: 'Données collectées', d: 'Via le formulaire de réservation : prénom, numéro de téléphone, ville, créneaux souhaités et contenu de la demande.' },
-        { t: 'Utilisation', d: 'Ces données servent uniquement à répondre à votre demande, à organiser la séance ou la location, et au suivi de votre carte de fidélité. Elles ne sont jamais vendues ni transmises à des tiers à des fins commerciales.' },
+        { t: 'Utilisation', d: 'Ces données servent uniquement à répondre à votre demande, à organiser la séance ou la location. Elles ne sont jamais vendues ni transmises à des tiers à des fins commerciales.' },
         { t: 'Durée de conservation', d: 'Trois ans après votre dernier contact, puis elles sont supprimées.' },
         { t: 'Vos droits', d: 'Vous pouvez à tout moment demander l’accès, la rectification ou la suppression de vos données, par téléphone ou par message au 07 61 83 15 86. Vous pouvez aussi saisir la CNIL.' },
         { t: 'Photos et vidéos', d: 'Aucune photo ou vidéo d’un client n’est publiée sans son accord explicite.' },
